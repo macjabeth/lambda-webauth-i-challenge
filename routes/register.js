@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 router.post('/', async ({ body: newUser }, res) => {
   try {
     newUser.password = bcrypt.hashSync(newUser.password, 4);
-    const [{ password, ...user }] = await userDB.add(newUser);
+    const [user] = await userDB.add(newUser);
     res.status(201).json(user);
   } catch (error) {
     debug(error); res.status(500).json({
