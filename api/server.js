@@ -2,6 +2,7 @@ const debug = require('debug')('server:log');
 const compression = require('compression');
 const helmet = require('helmet');
 const express = require('express');
+const auth = require('./auth');
 const server = express();
 
 // Middleware
@@ -18,6 +19,7 @@ server.use((req, res, next) => {
 server.use('/api/register', require('../routes/register'));
 server.use('/api/login', require('../routes/login'));
 server.use('/api/users', require('../routes/users'));
+server.use('/api/restricted/*', auth.restricted);
 
 server.use('/api', (req, res) => {
   res.status(418).json({ message: "It's working! It's working!!!" });
