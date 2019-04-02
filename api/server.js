@@ -1,6 +1,7 @@
 const debug = require('debug')('server:log');
 const compression = require('compression');
 const helmet = require('helmet');
+const cors = require('cors');
 const express = require('express');
 const auth = require('./auth');
 const server = express();
@@ -9,6 +10,7 @@ const server = express();
 server.use(express.json());
 server.use(compression());
 server.use(helmet());
+server.use(cors());
 server.use((req, res, next) => {
   res.on('finish', () =>
     debug(`${req.method} ${req.originalUrl} - ${res.statusCode} [${res.statusMessage}]`));
