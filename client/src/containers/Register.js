@@ -11,7 +11,7 @@ const Register = ({
 }) => {
   const [username, setUsername, updateUsername] = useInput();
   const [password, setPassword, updatePassword] = useInput();
-  const signingUp = pathname === '/signup';
+  const signingUp = pathname === '/register';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,17 +20,21 @@ const Register = ({
 
     setUsername('');
     setPassword('');
-    push('/users');
+    push(signingUp ? '/login' : '/users');
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" name="username" id="username"
+    <form onSubmit={handleSubmit} className="register-form">
+      <input type="text" name="username" id="username" placeholder="Username"
         value={username} onChange={updateUsername} />
-      <input type="password" name="password" id="password"
+      <input type="password" name="password" id="password" placeholder="Password"
         value={password} onChange={updatePassword} />
-      <input type="submit" value="Login" />
-      <Link to="/signup">Register?</Link>
+      <input type="submit" value={signingUp ? 'Register' : 'Login'} />
+      {signingUp ? (
+        <Link to="/login">Have an account?</Link>
+      ) : (
+        <Link to="/register">Register?</Link>
+      )}
     </form>
   );
 }
