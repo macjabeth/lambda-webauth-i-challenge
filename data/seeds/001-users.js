@@ -1,8 +1,8 @@
-const faker = require('faker');
+const casual = require('casual');
 
 const generateUser = () => ({
-  username: faker.internet.userName(),
-  password: faker.internet.password()
+  username: casual.username,
+  password: casual.password
 });
 
 exports.seed = (knex) => knex('users').insert(
