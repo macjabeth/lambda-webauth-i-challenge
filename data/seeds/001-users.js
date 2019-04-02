@@ -1,8 +1,9 @@
 const casual = require('casual');
+const bcrypt = require('bcryptjs');
 
 const generateUser = () => ({
   username: casual.username,
-  password: casual.password
+  password: bcrypt.hashSync(casual.password, 4)
 });
 
 exports.seed = (knex) => knex('users').insert(
