@@ -5,8 +5,9 @@ import Loader from 'react-loader-spinner';
 
 const Users = ({ fetchUsers }) => {
   const [users, setUsers] = useState([]);
+
   useEffect(() => {
-    fetchUsers().then(({data}) => setUsers(data));
+    fetchUsers().then(({data}) => setUsers(data || []));
   }, []);
 
   return (

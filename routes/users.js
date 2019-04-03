@@ -1,9 +1,9 @@
 const debug = require('debug')('server:db');
+const restricted = require('../middleware/restricted');
 const router = require('express').Router();
 const userDB = require('../models/users');
-const auth = require('../api/auth');
 
-router.get('/', auth.restricted, async (req, res) => {
+router.get('/', restricted, async (req, res) => {
   try {
     const users = await userDB.find();
     res.status(200).json(users);

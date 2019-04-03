@@ -8,7 +8,7 @@ const Root = ({ store }) => (
   <Provider store={store}>
     <Router>
       <Fragment>
-        <Route path="/(login|signup)" component={Register} />
+        <Route path="/(login|register)" component={Register} />
         <Route path="/users" component={Users} />
       </Fragment>
     </Router>

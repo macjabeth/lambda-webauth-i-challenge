@@ -11,10 +11,7 @@ export const serverHandshake = (auth) => {
   }
 
   if (auth) {
-    options.headers = {
-      username: 'Harber.Grayson',
-      password: '8Hazel98'
-    }
+    // not yet?
   }
 
   return axios.create(options);
@@ -23,7 +20,7 @@ export const serverHandshake = (auth) => {
 export const authLogin = creds => async dispatch => {
   dispatch({ type: LOGIN_START });
   try {
-    const success = await serverHandshake().post('/login', creds);
+    const success = await serverHandshake().post('/auth/login', creds);
     dispatch({ type: LOGIN_SUCCESS, payload: success.data });
     return success;
   } catch (error) {
@@ -35,7 +32,7 @@ export const authLogin = creds => async dispatch => {
 export const authSignup = creds => async dispatch => {
   dispatch({ type: SIGNUP_START });
   try {
-    const success = await serverHandshake().post('/register', creds);
+    const success = await serverHandshake().post('/auth/register', creds);
     dispatch({ type: SIGNUP_SUCCESS, payload: success.data });
     return success;
   } catch (error) {

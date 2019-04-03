@@ -3,14 +3,18 @@ const compression = require('compression');
 const helmet = require('helmet');
 const cors = require('cors');
 const express = require('express');
-const auth = require('./auth');
+const session = require('express-session');
 const server = express();
+
+const restricted = require('../middleware/restricted');
+const sessionConfig = require('../config/session');
 
 // Middleware
 server.use(express.json());
 server.use(compression());
 server.use(helmet());
 server.use(cors());
+server.use(session(sessionConfig));
 server.use((req, res, next) => {
   res.on('finish', () =>
     debug(`${req.method} ${req.originalUrl} - ${res.statusCode} [${res.statusMessage}]`));
@@ -18,10 +22,9 @@ server.use((req, res, next) => {
 });
 
 // Routes
-server.use('/api/register', require('../routes/register'));
-server.use('/api/login', require('../routes/login'));
+server.use('/api/auth', require('../routes/auth'));
 server.use('/api/users', require('../routes/users'));
-server.use('/api/restricted/*', auth.restricted);
+server.use('/api/restricted/*', restricted);
 
 server.use('/api', (req, res) => {
   res.status(418).json({ message: "It's working! It's working!!!" });
